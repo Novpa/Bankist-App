@@ -90,10 +90,8 @@ const calcDisplayBalance = function (movements) {
   labelBalance.textContent = `${balance} EUR`;
 };
 
-calcDisplayBalance(account1.movements);
-
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
     .filter(function (mov) {
       return mov > 0;
     })
@@ -102,7 +100,7 @@ const calcDisplaySummary = function (movements) {
     }, 0);
   labelSumIn.textContent = `${incomes}€`;
 
-  const out = movements
+  const out = acc.movements
     .filter(function (mov) {
       return mov < 0;
     })
@@ -112,12 +110,12 @@ const calcDisplaySummary = function (movements) {
 
   labelSumOut.textContent = `${Math.abs(out)}€`;
 
-  const interest = movements
+  const interest = acc.movements
     .filter(function (mov) {
       return mov > 0;
     })
     .map(function (mov) {
-      return mov * 0.012;
+      return (mov * acc.interestRate) / 100;
     })
     .filter(function (mov, i, arr) {
       return mov >= 1;
@@ -126,8 +124,6 @@ const calcDisplaySummary = function (movements) {
 
   labelSumInterest.textContent = `${interest}€`;
 };
-
-calcDisplaySummary(account1.movements);
 
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
@@ -167,18 +163,47 @@ const totalWithdrawal = movements
     return acc + mov;
   }, 0);
 
-const firstWithdrawal = movements.find(mov => mov < 0);
-console.log(firstWithdrawal);
-console.log(accounts);
+//Event Handlers
+let currentAccount;
+btnLogin.addEventListener('click', e => {
+  //prevent form from submitting
+  e.preventDefault();
+  currentAccount = accounts.find(
+    acc => acc.usernames === inputLoginUsername.value
+  );
 
-const account = accounts.find(acc => acc.owner === 'Jessica Davis');
-console.log(account);
+  console.log(currentAccount);
+  if (currentAccount?.pin == Number(inputLoginPin.value)) {
+    //Display UI & Welcome Message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    //Clear the input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    inputLoginPin.blur();
 
-for (const [index, account] of accounts.entries()) {
-  if (account.owner === 'Jessica Davis') {
-    console.log(account);
+    containerApp.style.opacity = 100;
+    //Display Movements
+    displayMovements(currentAccount.movements);
+    //Display Balace
+    calcDisplayBalance(currentAccount.movements);
+    //Display Sumarry
+    calcDisplaySummary(currentAccount);
   }
-}
+});
+
+// const firstWithdrawal = movements.find(mov => mov < 0);
+// console.log(firstWithdrawal);
+// console.log(accounts);
+
+// const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+// console.log(account);
+
+// for (const [index, account] of accounts.entries()) {
+//   if (account.owner === 'Jessica Davis') {
+//     console.log(account);
+//   }
+// }
 // const humanAge1 = [5, 2, 4, 1, 15, 8, 3];
 // const humanAge2 = [16, 6, 10, 5, 6, 1, 4];
 
