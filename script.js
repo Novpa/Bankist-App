@@ -143,21 +143,21 @@ createUsernames(accounts);
 
 //Accumulater -> Snowball
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-console.log(movements);
+// console.log(movements);
 
 const max = movements.reduce((acc, mov) => {
   if (acc > mov) return acc;
   else return mov;
 }, movements[0]);
 
-console.log(max);
+// console.log(max);
 
 const eurToUsd = 1.1;
 const totalDepositsUSD = movements
   .filter(mov => mov > 0)
   .map(mov => mov * eurToUsd)
   .reduce((acc, mov) => acc + mov, 0);
-console.log(totalDepositsUSD);
+// console.log(totalDepositsUSD);
 
 const totalWithdrawal = movements
   .filter(function (mov) {
@@ -166,8 +166,53 @@ const totalWithdrawal = movements
   .reduce(function (acc, mov) {
     return acc + mov;
   }, 0);
-console.log(totalWithdrawal);
 
+const firstWithdrawal = movements.find(mov => mov < 0);
+console.log(firstWithdrawal);
+console.log(accounts);
+
+const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+console.log(account);
+
+for (const [index, account] of accounts.entries()) {
+  if (account.owner === 'Jessica Davis') {
+    console.log(account);
+  }
+}
+// const humanAge1 = [5, 2, 4, 1, 15, 8, 3];
+// const humanAge2 = [16, 6, 10, 5, 6, 1, 4];
+
+// const calcAverageHUmanAge = humanAge1.reduce((acc, mov, index, arr) => {
+//   const sum = acc + mov;
+//   return sum;
+// }, 0);
+
+// console.log(calcAverageHUmanAge);
+
+// const average = (sum, arr) => {
+//   const average = sum / arr.length;
+//   return average;
+// };
+
+// console.log(average(calcAverageHUmanAge, humanAge1));
+
+// const averageCalc = humanAge1
+//   .map(mov => mov + 0)
+//   .reduce((acc, mov, index, arr) => {
+//     acc += mov;
+//     return acc;
+//   });
+// console.log(averageCalc);
+// console.log(humanAge1.length);
+// const calcAverageHUmanAge = humanAge => {
+//   humanAge.reduce((cur, mov, index) => {
+//     console.log(index);
+//     return cur + mov;
+//   }, humanAge[0]);
+// };
+
+// const totalSum = calcAverageHUmanAge(humaAge1);
+// console.log(totalSum);
 // // const balance = movements.reduce(function (acc, cur, i, arr) {
 // //   console.log(`Iteration number ${i}: ${acc}`);
 // //   return acc + cur;
