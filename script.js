@@ -85,8 +85,8 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => (acc += mov), 0);
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => (acc += mov), 0);
   labelBalance.textContent = `${balance} EUR`;
 };
 
@@ -186,12 +186,23 @@ btnLogin.addEventListener('click', e => {
     //Display Movements
     displayMovements(currentAccount.movements);
     //Display Balace
-    calcDisplayBalance(currentAccount.movements);
+    calcDisplayBalance(currentAccount);
     //Display Sumarry
     calcDisplaySummary(currentAccount);
   }
 });
 
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.usernames === inputTransferTo.value
+  );
+  console.log(amount);
+  console.log(receiverAcc);
+
+  if(amount > 0 && )
+});
 // const firstWithdrawal = movements.find(mov => mov < 0);
 // console.log(firstWithdrawal);
 // console.log(accounts);
