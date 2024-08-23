@@ -193,29 +193,50 @@ btnLogin.addEventListener('click', e => {
   }
 });
 
-btnTransfer,
-  addEventListener('click', function (e) {
-    e.preventDefault();
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
 
-    const amount = Number(inputTransferAmount.value);
-    const receiverAcc = accounts.find(
-      acc => acc.usernames === inputTransferTo.value
-    );
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.usernames === inputTransferTo.value
+  );
 
-    if (
-      amount > 0 &&
-      receiverAcc &&
-      currentAccount.balance >= amount &&
-      receiverAcc?.usernames !== currentAccount.usernames
-    ) {
-      currentAccount.movements.push(-amount);
-      receiverAcc.movements.push(amount);
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.usernames !== currentAccount.usernames
+  ) {
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
 
-      //NOTE Update UI
-      updateUI(currentAccount);
-    }
-    inputTransferAmount.value = inputTransferTo.value = '';
-  });
+    //NOTE Update UI
+    updateUI(currentAccount);
+  }
+  inputTransferAmount.value = inputTransferTo.value = '';
+});
+
+//NOTE Loan Request
+//Only allows once the user has put deposit at least 10% of the loan request amount
+
+btnLoan.addEventListener('click', e => {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+  const checkLoan = currentAccount.movements.some(mov => mov >= amount * 0.1);
+  if (checkLoan) {
+    console.log(`Approved`);
+
+    //REMARK Add movement
+    currentAccount.movements.push(amount);
+
+    //REMARK Update UI
+    updateUI(currentAccount);
+  }
+
+  //REMARK Clear Input field
+  inputLoanAmount.value = '';
+});
 
 //NOTE findIndex
 btnClose.addEventListener('click', function (e) {
@@ -237,6 +258,37 @@ btnClose.addEventListener('click', function (e) {
   }
   inputCloseUsername.value = inputClosePin.value = '';
 });
+//
+// flat
+const overalBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, move) => acc + move, 0);
+
+console.log(overalBalance);
+
+// flatMap
+const overalBalance2 = accounts
+  .flatMap(acc => acc.movements) //Only goes 1 level deep (Cannot be change)!
+  .reduce((acc, move) => acc + move, 0);
+
+console.log(overalBalance2);
+
+//
+////////////////////////////////////////////////////
+// console.log(movements);
+
+// console.log(movements.includes(-130));
+
+// //Some Method
+// const anyDeposits = movements.some(mov => mov > 0);
+
+// console.log(anyDeposits);
+
+// //Every Method
+// console.log(account4.movements.every(mov => mov > 0));
+
+//Saparate Cllback
 // btnTransfer.addEventListener('click', function (e) {
 //   e.preventDefault();
 //   const amount = Number(inputTransferAmount.value);
