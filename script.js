@@ -40,6 +40,7 @@ const account4 = {
 };
 
 const accounts = [account1, account2, account3, account4];
+console.log(accounts);
 
 // Elements
 const labelWelcome = document.querySelector('.welcome');
@@ -216,12 +217,26 @@ btnTransfer,
     inputTransferAmount.value = inputTransferTo.value = '';
   });
 
+//NOTE findIndex
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
 
-  if(inputCloseUsername.value == )
-});
+  if (
+    inputCloseUsername.value === currentAccount.usernames &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.usernames === currentAccount.usernames
+    );
+    console.log(index);
+    //NOTE Delete Account
+    accounts.splice(index, 1);
 
+    //NOTE Hide UI
+    containerApp.style.opacity = 0;
+  }
+  inputCloseUsername.value = inputClosePin.value = '';
+});
 // btnTransfer.addEventListener('click', function (e) {
 //   e.preventDefault();
 //   const amount = Number(inputTransferAmount.value);
