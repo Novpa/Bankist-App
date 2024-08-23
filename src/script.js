@@ -68,10 +68,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
         <div class="movements__row">
@@ -258,24 +260,50 @@ btnClose.addEventListener('click', function (e) {
   }
   inputCloseUsername.value = inputClosePin.value = '';
 });
+
+//NOTE Sort the movements
+let sorted = false;
+btnSort.addEventListener('click', e => {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
+});
+
 //
-// flat
-const overalBalance = accounts
-  .map(acc => acc.movements)
-  .flat()
-  .reduce((acc, move) => acc + move, 0);
 
-console.log(overalBalance);
+//Strings
+const owner = ['Anas', 'Martha', 'John', 'Zach'];
+console.log(owner.sort()); // sort() --> Mutate the Array (Base on the string)
+console.log(owner);
 
-// flatMap
-const overalBalance2 = accounts
-  .flatMap(acc => acc.movements) //Only goes 1 level deep (Cannot be change)!
-  .reduce((acc, move) => acc + move, 0);
+//Number
 
-console.log(overalBalance2);
+console.log(movements);
 
+// return < 0, a, b, ... (Keep order)
+// return > 0, b, a, ... (Switch order)
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+movements.sort((a, b) => b - a);
+
+console.log(movements);
 //
 ////////////////////////////////////////////////////
+// flat
+// const overalBalance = accounts
+//   .map(acc => acc.movements)
+//   .flat()
+//   .reduce((acc, move) => acc + move, 0);
+
+// console.log(overalBalance);
+
+// // flatMap
+// const overalBalance2 = accounts
+//   .flatMap(acc => acc.movements) //Only goes 1 level deep (Cannot be change)!
+//   .reduce((acc, move) => acc + move, 0);
+
+// console.log(overalBalance2);
 // console.log(movements);
 
 // console.log(movements.includes(-130));
