@@ -80,7 +80,7 @@ const displayMovements = function (movements, sort = false) {
           <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-          <div class="movements__value">${mov}</div>
+          <div class="movements__value">${mov}€</div>
         </div>`;
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
@@ -270,26 +270,59 @@ btnSort.addEventListener('click', e => {
 });
 
 //
+const arr = [1, 2, 3, 4, 5, 6, 7];
 
-//Strings
-const owner = ['Anas', 'Martha', 'John', 'Zach'];
-console.log(owner.sort()); // sort() --> Mutate the Array (Base on the string)
-console.log(owner);
+const x = new Array(7);
+console.log(x);
 
-//Number
+//fill()
+x.fill(1, 3, 5);
+console.log(x);
 
-console.log(movements);
+arr.fill(23, 4, 6);
+console.log(arr);
 
-// return < 0, a, b, ... (Keep order)
-// return > 0, b, a, ... (Switch order)
-movements.sort((a, b) => a - b);
-console.log(movements);
+//Array.from
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
 
-movements.sort((a, b) => b - a);
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
 
-console.log(movements);
+const dice = Array.from({ length: 100 }, () =>
+  Math.floor(Math.random() * 6 + 1)
+);
+
+console.log(dice);
+
+labelBalance.addEventListener('click', () => {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
+  // console.log(movementsUI.map(el => Number(el.textContent.replace('€', ''))));
+  console.log(movementsUI);
+});
+
 //
 ////////////////////////////////////////////////////
+// //Strings
+// const owner = ['Anas', 'Martha', 'John', 'Zach'];
+// console.log(owner.sort()); // sort() --> Mutate the Array (Base on the string)
+// console.log(owner);
+
+// //Number
+
+// console.log(movements);
+
+// // return < 0, a, b, ... (Keep order)
+// // return > 0, b, a, ... (Switch order)
+// movements.sort((a, b) => a - b);
+// console.log(movements);
+
+// movements.sort((a, b) => b - a);
+
+// console.log(movements);
 // flat
 // const overalBalance = accounts
 //   .map(acc => acc.movements)
