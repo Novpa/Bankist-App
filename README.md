@@ -38,10 +38,12 @@ Bankist is a fictional online banking website that showcases the features and se
 
 ```
 
-## Licence
-
-MIT Licence.
+## Clonning
 
 ```
 https://github.com/Novpa/Bankist-App.git
 ```
+
+## Licence
+
+MIT Licence.
