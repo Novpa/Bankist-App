@@ -21,7 +21,7 @@ Bankist is a fictional online banking website that showcases the features and se
 
 ## Project Structure
 
-````bash
+```bash
 ├── index.html         # Main HTML file
 ├── css/
 │   ├── styles.css     # Main stylesheet
@@ -34,14 +34,18 @@ Bankist is a fictional online banking website that showcases the features and se
     └── icons/         # Icon files
 
 
+
+
+```
+
 ## Instalation
-```markdown
+
+````markdown
 ```bash
 git clone https://github.com/Novpa/bankist-app.git
 cd bankist-website
 
 ## Licence
 MIT Licence.
-
-
+```
 ````
